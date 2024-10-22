@@ -1,0 +1,60 @@
+- Sách:
+	+mã sách
+  +Tên sách
+  +Giá bán
+  +Tác giả
+  +Năm xuất bản
+  +Số lượng 
+  +Thể loại
+  +Ngôn ngữ
+  +Mô tả
+
+- Tác giả:
+	+mã tác giả
+	+ Họ và tên
+	+ Năm Sinh
+	+ Tiểu sử
+	
+-Thể loại:
+	+mã thể loại
+	+ Tên thể loại
+-Khách hàng:
+	+mã khách hang
+	+Tên đang nhập
+	+mật khẩu
+	+giới tính
+	+họ tên
+	+địa chỉ 
+	+địa chỉ mua hàng
+	+địa chỉ nghi hóa đơn
+	+ngày sinh
+	+SDT
+	+email
+	+Đăng kí nhận bản tin email
+	
+	
+	
+
+-Đơn hàng: 
+	+mã đơn hàng
+	+Khách hàng
+	+địa chỉ hóa đơn
+	+địa chỉ nhận hàng
+	+tràn thái L mới tạo đang xử lý, giao thành công, trả hàng.
+	+hình thức thanh toán
+	+tran thai thanh toán
+	+số tiền đã thanh toán
+	+số tiền còn thiếu
+	+ngày đặt hàng
+	+ngày giao hàng
+	
+- chi tiết đơn hàng:
+	+mã chi tiết đơn hàng
+	+đơn hàng
+	+nã sách
+	+số lượng
+	+giá bìa
+	+giảm giá
+	+giá bán
+	+thuế Vat
+	+Tổng tiền thanh toán
