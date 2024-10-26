@@ -1,10 +1,12 @@
+<%@page import="model.KhachHang"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1, shrink-to-fit=no">
 <title>Bookstore</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -57,9 +59,43 @@
 					<input class="form-control me-2" type="search"
 						placeholder="Nội dung tìm kiếm" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">Tìm</button>
-					<a class="btn btn-primary" style="white-space: nowrap ; margin-left: 12px" href="dangky.jsp">
-						Đăng Ký
-					 </a>
+					<%
+					Object obj = session.getAttribute("khachHang");
+					KhachHang khachHang = null;
+					if (obj != null)
+						khachHang = (KhachHang) obj;
+					if (khachHang == null) {
+					%>
+					<a class="btn btn-primary"
+						style="white-space: nowrap; margin-left: 12px" href="dangnhap.jsp">
+						Đăng nhập </a>
+					<%
+					} else {
+					%>
+					<div class="btn-group dropstart">
+						<button type="button" class="btn btn-secondary dropdown-toggle"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							Tài khoản <%=khachHang.getTenDangNhap() %></button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Đơn hàng của tôi</a></li>
+							<li><a class="dropdown-item" href="#">Thông báo</a></li>
+							<li><a class="dropdown-item" href="doithongtin.jsp">Thay đổi thông tin</a></li>
+							<li><a class="dropdown-item" href="doimatkhau.jsp">Đổi mật khẩu</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="dang-xuat">Thoát tài khoản</a></li>
+						</ul>
+					</div>
+
+					<%-- <div class="row text-center" style="margin-left: 0.20em;">
+							<div class="row"><b>Chào <%=khachHang.getTenDangNhap() %></b></div>
+							<div class="row" ><a style="white-space: nowrap;display: inline-block;background-color: #007bff;color: white; text-decoration: none; border-radius: 5px; text-align: center;" href="dang-xuat">
+								Đăng xuất
+							</a>
+							</div>
+						</div> --%>
+					<%
+					}
+					%>
 				</form>
 			</div>
 		</div>
@@ -133,69 +169,74 @@
 				</div>
 				<!-- product -->
 				<div class="row">
-			<div class="col-lg-4 col-md-6 mb-4">
-				<div class="card" style="width: 18rem;">
-					<img src="..." class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<div class="card" style="width: 18rem;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the
+									card title and make up the bulk of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 mb-4">
-				<div class="card" style="width: 18rem;">
-					<img src="..." class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<div class="card" style="width: 18rem;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the
+									card title and make up the bulk of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 mb-4">
-				<div class="card" style="width: 18rem;">
-					<img src="..." class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<div class="card" style="width: 18rem;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the
+									card title and make up the bulk of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-lf-4 col-md-6 mb-4">
-				<div class="card" style="width: 18rem;">
-					<img src="..." class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+					<div class="col-lf-4 col-md-6 mb-4">
+						<div class="card" style="width: 18rem;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the
+									card title and make up the bulk of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
 					</div>
+
 				</div>
-			</div>
-			
-			</div>
-			<!-- End product -->
+				<!-- End product -->
 
 			</div>
 			<!-- End siler -->
 		</div>
 	</div>
 
-<footer class="py-3 my-4">
-    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-    </ul>
-    <p class="text-center text-body-secondary">© 2024 Company, Inc</p>
-  </footer>
+	<footer class="py-3 my-4">
+		<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+			<li class="nav-item"><a href="#"
+				class="nav-link px-2 text-body-secondary">Home</a></li>
+			<li class="nav-item"><a href="#"
+				class="nav-link px-2 text-body-secondary">Features</a></li>
+			<li class="nav-item"><a href="#"
+				class="nav-link px-2 text-body-secondary">Pricing</a></li>
+			<li class="nav-item"><a href="#"
+				class="nav-link px-2 text-body-secondary">FAQs</a></li>
+			<li class="nav-item"><a href="#"
+				class="nav-link px-2 text-body-secondary">About</a></li>
+		</ul>
+		<p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+	</footer>
 	<!-- end content -->
 
 </body>

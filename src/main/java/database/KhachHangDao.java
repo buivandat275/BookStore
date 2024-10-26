@@ -62,6 +62,7 @@ public class KhachHangDao {
 
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery();
+			
 
 			while (rs.next()) {
 				String maKhacHang = rs.getString("makhachhang");
@@ -90,6 +91,43 @@ public class KhachHangDao {
 		return ketQua;
 	}
 
+	public KhachHang selectByUserNameAndPassWord(KhachHang t) {
+		KhachHang ketQua = null;
+		try {
+			Connection con = JDBCUtil.getConnection();
+
+			String sql = "SELECT * FROM khachhang WHERE tendangnhap=? and matkhau=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getTenDangNhap());
+			st.setString(2, t.getMatKhau());
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				String maKhacHang = rs.getString("makhachhang");
+				String tenDangNhap = rs.getString("tendangnhap");
+				String matKhau = rs.getString("matkhau");
+				String hoVaTen = rs.getString("hovaten");
+				String gioiTinh = rs.getString("gioitinh");
+				String diaChi = rs.getString("diachi");
+				String diaChiNhanHang = rs.getString("diachinhanhang");
+				String diaChiMuaHang = rs.getString("diachimuahang");
+				Date ngaySinh = rs.getDate("ngaysinh");
+				String soDienThoai = rs.getString("sodienthoai");
+				String email = rs.getString("email");
+				boolean dangKyNhanBangTin = rs.getBoolean("dangkynhanbangtin");
+
+				ketQua = new KhachHang(maKhacHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChi, diaChiNhanHang,
+						diaChiMuaHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin);
+			}
+
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ketQua;
+	}
 	public int insert(KhachHang t) {
 		int ketQua = 0;
 		try {
@@ -114,14 +152,9 @@ public class KhachHangDao {
 			st.setString(11, t.getEmail());
 			st.setBoolean(12, t.isDangKyNhanBangTin());
 
-			// Bước 3: thực thi câu lệnh SQL
 			ketQua = st.executeUpdate();
 
-			// Bước 4:
-			System.out.println("Bạn đã thực thi: " + sql);
-			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
-
-			// Bước 5:
+			
 			JDBCUtil.closeConnection(con);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -167,6 +200,7 @@ public class KhachHangDao {
 		}
 		return dem;
 	}
+	
 
 	public int update(KhachHang t) {
 		int ketQua = 0;
@@ -200,6 +234,59 @@ public class KhachHangDao {
 		}
 
 		return ketQua;
+	}
+	public int updateInfo(KhachHang t) {
+		int ketQua = 0;
+		try {
+			Connection con = JDBCUtil.getConnection();
+
+			String sql = "UPDATE khachhang  SET  hovaten=?, gioitinh=?"
+					+ ", diachi=?, diachinhanhang=?, diachimuahang=?, ngaysinh=?, sodienthoai=?"
+					+ ", email=?, dangkynhanbangtin=? WHERE makhachhang=?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getHoVaTen());
+			st.setString(2, t.getGioiTinh());
+			st.setString(3, t.getDiaChi());
+ 			st.setString(4, t.getDiaChiNhanHang());
+			st.setString(5, t.getDiaChiMuaHang());
+			st.setDate(6, t.getNgaySinh());
+			st.setString(7, t.getSoDienThoai());
+			st.setString(8, t.getEmail());
+			st.setBoolean(9, t.isDangKyNhanBangTin());
+			st.setString(10, t.getMaKhacHang());
+
+			System.out.println(sql);
+			ketQua = st.executeUpdate();
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ketQua;
+	}
+	
+	public boolean doiPass(KhachHang t) {
+		int ketQua = 0;
+		try {
+			Connection con = JDBCUtil.getConnection();
+
+			String sql = "UPDATE khachhang  SET  matkhau=? WHERE makhachhang=?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMatKhau());
+			st.setString(2, t.getMaKhacHang());
+
+			System.out.println(sql);
+			ketQua = st.executeUpdate();
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ketQua>0;
 	}
 	
 	public boolean kiemTraTenDangNhap(String tenDangNhap) {

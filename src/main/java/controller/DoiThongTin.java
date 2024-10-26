@@ -16,16 +16,16 @@ import java.util.Random;
 import database.KhachHangDao;
 
 /**
- * Servlet implementation class DangKy
+ * Servlet implementation class DoiThongTin
  */
-@WebServlet("/DangKy")
-public class DangKy extends HttpServlet {
+@WebServlet("/doi-thong-tin")
+public class DoiThongTin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DangKy() {
+    public DoiThongTin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,10 +35,7 @@ public class DangKy extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String tenDangNhap = request.getParameter("user");
-		String matKhau = request.getParameter("pass");
-		String matKhauNhapLai = request.getParameter("passnn");
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String hoVaTen = request.getParameter("hoVaTen");
 		String gioiTinh = request.getParameter("gioiTinh");
 		String ngaySinh = request.getParameter("ngaySinh");
@@ -48,7 +45,7 @@ public class DangKy extends HttpServlet {
 		String dienThoai = request.getParameter("dienThoai");
 		String email = request.getParameter("email");
 		String dongYNhanE = request.getParameter("DongYNhanE");
-		request.setAttribute("tenDangNhap", tenDangNhap);
+		
 		request.setAttribute("hoVaTen", hoVaTen);
 		request.setAttribute("gioiTinh", gioiTinh);
 		request.setAttribute("ngaySinh", ngaySinh);
@@ -61,28 +58,32 @@ public class DangKy extends HttpServlet {
 		String url ="";
 		String baoLoi ="";
 		KhachHangDao khanhHangDao = new KhachHangDao();
-		if(khanhHangDao.kiemTraTenDangNhap(tenDangNhap)) {
-			baoLoi+="Tên đăng nhập đã tồn tại, vui lòng chọn tên đăng nhập khác .<br/>";
-		}
-		if(!matKhau.equals(matKhauNhapLai)) {
-			baoLoi+="Mật khẩu không Khớp.<br/>";
-		}else {
-			matKhau = MaHoa.toSHA1(matKhau);
-		}
+		
 		
 		request.setAttribute("baoLoi", baoLoi);
 		if(baoLoi.length()>0) {
-			url ="/dangky.jsp";
+			url ="/doithongtin.jsp";
 		}else {
-			Random rd = new Random();
-			String maKhachHang =rd.nextInt(1000)+"";
-			KhachHang kh = new KhachHang(maKhachHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChiKhachHang, diaChiNhanHang, diaChiMuaHang, Date.valueOf(ngaySinh), dienThoai, email, dongYNhanE!=null);
-			khanhHangDao.insert(kh); 
+			Object obj = request.getSession().getAttribute("khachHang");
+			KhachHang khachHang = null;
+			if (obj != null)
+				khachHang = (KhachHang)obj;
+			if (khachHang != null) {
+			
+			String maKhachHang = khachHang.getMaKhacHang();
+			KhachHang kh = new KhachHang(maKhachHang, "", "", hoVaTen, gioiTinh, diaChiKhachHang, diaChiNhanHang, diaChiMuaHang, Date.valueOf(ngaySinh), dienThoai, email, dongYNhanE!=null);
+			khanhHangDao.updateInfo(kh); 
+			//load lai khachHang vao session
+			KhachHang kh2 = khanhHangDao.selectById(kh);
+			request.getSession().setAttribute("khachHang", kh2);
 			
 			url = "/thanhcong.jsp";
 		}
+		}
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
 		rd.forward(request, response);
+		
+		
 		
 	}
 
